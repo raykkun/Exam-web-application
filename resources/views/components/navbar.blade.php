@@ -8,11 +8,12 @@
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
                     <!-- Current: "bg-gray-950/50 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
-                    <x-nav-link href="/" :active="request()->is('/')">Dashboard</x-nav-link>
+                    <x-nav-link href="/" :active="request()->is('/')">Beranda</x-nav-link>
+                    <x-nav-link href="schedule" :active="request()->is('schedule')">Jadwal Ujian</x-nav-link>
                     <x-nav-link href="results" :active="request()->is('results')">Hasil Ujian</x-nav-link>
-                    <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Projects</a>
-                    <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Calendar</a>
-                    <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Reports</a>
+                    <x-nav-link href="settings" :active="request()->is('settings')">Pengaturan</x-nav-link>
+                    <x-nav-link href="logout" :active="request()->is('logout')">Keluar</x-nav-link>
+                    
                     </div>
                 </div>
                 </div>
@@ -57,7 +58,6 @@
                 </div>
             </div>
             </div>
-
             <el-disclosure id="mobile-menu" hidden class="block md:hidden">
             <div class="space-y-1 px-2 pt-2 pb-3 sm:px-3">
                 <!-- Current: "bg-gray-950/50 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->

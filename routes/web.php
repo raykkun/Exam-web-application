@@ -15,14 +15,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('dashboard', [
-        'title' => 'Dashboard',
+        'title' => 'Beranda',
+        'name' => 'Budi santoso'
     ]);
 });
 
-Route::get('/results', function (){
-    return view('results', ['title' => 'Hasil Ujian',]);
+Route::get('schedule', function (){
+    return view('schedule', ['title' => 'Jadwal Ujian','name' => 'Budi santoso']);
 });
 
-Route::get('/admin', function (){
-    return view('admin');
+Route::get('results', function (){
+    return view('results', ['title' => 'Hasil Ujian','name' => 'Budi santoso']);
+});
+
+Route::get('settings', function (){
+    return view('settings', ['title' => 'Pengaturan', 'name' => 'Budi santoso']);
 });
