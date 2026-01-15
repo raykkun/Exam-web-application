@@ -10,7 +10,7 @@
                     <!-- Current: "bg-gray-950/50 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
                     <x-nav-link href="/" :active="request()->is('/')">Beranda</x-nav-link>
                     <x-nav-link href="schedule" :active="request()->is('schedule')">Jadwal Ujian</x-nav-link>
-                    <x-nav-link href="results" :active="request()->is('results')">Hasil Ujian</x-nav-link>
+                    <x-nav-link href="testResults" :active="request()->is('testResults')">Hasil Ujian</x-nav-link>
                     <x-nav-link href="settings" :active="request()->is('settings')">Pengaturan</x-nav-link>
                     <x-nav-link href="logout" :active="request()->is('logout')">Keluar</x-nav-link>
                     

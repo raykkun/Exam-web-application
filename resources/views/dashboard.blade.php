@@ -1,29 +1,54 @@
-<x-layout>
-    <x-slot:title> {{ $title }} </x-slot:title>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Laravel 12 Custom Dashboard - ItSolutionStuff.com</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  </head>
+<body>
     
+<main>
+  <div class="container py-4">
+    <header class="pb-3 mb-4 border-bottom">
+        <div class="row">
+            <div class="col-md-11">
+                <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+                    <img src="https://www.itsolutionstuff.com/assets/images/logo-it-2.png" alt="BootstrapBrain Logo" width="300">
+                </a>          
+            </div>
+            <div class="col-md-1">
+                <a class="dropdown-item" href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
 
-    <div class="text-white py-8 max-w-screen-md border-b border-white/30">
-        
-        <div class="grid grid-cols-2 gap-4 mt-4">
-            <p class="mb-1 text-3xl tracking-tight font-bold text-white-900">Jadwal ujian</p>
-            
-            <div class="shadow-md p-4 bg-white/10 rounded-lg">
-                <h1 class="text-xl font-bold border-b border-white/30">ujian aktif</h1>
-                <ul class="mt-4">
-                    <li>Matematika: 10 Juli 2024</li>
-                    <li>Fisika: 12 Juli 2024</li>
-                    <li>Kimia: 14 Juli 2024</li>
-                </ul>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
             </div>
-            <div class="shadow-md p-4 bg-white/10 rounded-lg">
-                <h1 class="text-xl font-bold border-b border-white/30">jadwal terdekat</h1>
-                <ul class="mt-4">
-                    <li>20 desember : bhs.inggris</li>
-                    <li>25 desember : bhs.indonesia</li>
-                    <li>30 desember : sejarah</li>
-                </ul>
-            </div>
-            
         </div>
+      
+    </header>
+
+    <div class="p-5 mb-4 bg-light rounded-3">
+      <div class="container-fluid py-5">
+
+        @session('success')
+            <div class="alert alert-success" role="alert"> 
+              {{ $value }}
+            </div>
+        @endsession
+
+        <h1 class="display-5 fw-bold">Hi, {{ auth()->user()->name }}</h1>
+        <p class="col-md-8 fs-4">Welcome to dashboard.<br/>Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. Check out the examples below for how you can remix and restyle it to your liking.</p>
+        <button class="btn btn-primary btn-lg" type="button">Dashboard</button>
+      </div>
     </div>
-</x-layout>
+
+  </div>
+</main>
+
+</body>
+</html>
