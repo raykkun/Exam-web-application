@@ -20,7 +20,7 @@ class AuthController extends Controller
      */
     public function index(): View
     {
-        return view('auth.login');
+        return view('auth.login', ['title' => 'Login']);
     }  
       
     /**
@@ -33,32 +33,24 @@ class AuthController extends Controller
         return view('auth.registration');
     }
       
-    /**
-     * Write code on Method
-     *
-     * @return response()
-     */
-    public function postLogin(Request $request): RedirectResponse
+     public function postLogin(Request $request): RedirectResponse
     {
         $request->validate([
-            'email' => 'required',
+            'email' => 'required|email',
             'password' => 'required',
         ]);
    
         $credentials = $request->only('email', 'password');
+
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('dashboard')
+            // Gunakan rute '/' atau nama rute 'dashboard'
+            return redirect()->intended(route('/'))
                         ->withSuccess('You have Successfully loggedin');
         }
   
-        return redirect("login")->withError('Oppes! You have entered invalid credentials');
+        return redirect("login")->with('error', 'Oppes! You have entered invalid credentials');
     }
-      
-    /**
-     * Write code on Method
-     *
-     * @return response()
-     */
+     
     public function postRegistration(Request $request): RedirectResponse
     {  
         $request->validate([
@@ -67,27 +59,24 @@ class AuthController extends Controller
             'password' => 'required|min:6',
         ]);
            
-        $data = $request->all();
-        $user = $this->create($data);
+        $user = $this->create($request->all());
             
         Auth::login($user); 
 
-        return redirect("dashboard")->withSuccess('Great! You have Successfully loggedin');
+        // Redirect ke route '/' (dashboard)
+        return redirect()->route('/')->withSuccess('Great! You have Successfully loggedin');
     }
     
-    /**
-     * Write code on Method
-     *
-     * @return response()
-     */
     public function dashboard()
     {
-        if(Auth::check()){
-            return view('dashboard');
-        }
-  
-        return redirect("login")->withSuccess('Opps! You do not have access');
+        // Pengecekan manual ini sebenarnya sudah di-handle oleh middleware 'auth' di web.php
+        // Tapi jika ingin tetap ada, pastikan variabel dikirim ke view agar tidak error 'null'
+        return view('dashboard', [
+            'title' => 'Beranda',
+            'user' => Auth::user()
+        ]);
     }
+    
     
     /**
      * Write code on Method
@@ -103,16 +92,14 @@ class AuthController extends Controller
       ]);
     }
     
-    /**
-     * Write code on Method
-     *
-     * @return response()
-     */
-    public function logout(): RedirectResponse
+     public function logout(Request $request): RedirectResponse
     {
-        Session::flush();
         Auth::logout();
+        
+        // Penting di Laravel: invalidate session & regenerate token untuk keamanan
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
   
-        return Redirect('login');
+        return redirect('login');
     }
 }

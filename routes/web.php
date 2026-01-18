@@ -1,48 +1,117 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\Result;
-use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ClassController;
+use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\ExamController;
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\ParticipantController;
+use App\Http\Controllers\ResultController;
+
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Public Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
 */
 
 Route::get('/', function () {
-    return view('dashboard', [
-        'title' => 'Beranda',
-        'name' => 'Budi santoso'
-    ]);
+    return view('welcome');
 });
 
-Route::get('schedule', function (){
-    return view('schedule', ['title' => 'Jadwal Ujian','name' => 'Budi santoso']);
+/*
+|--------------------------------------------------------------------------
+| Authentication Routes (Laravel Breeze)
+|--------------------------------------------------------------------------
+*/
+
+require __DIR__.'/auth.php';
+
+/*
+|--------------------------------------------------------------------------
+| Authenticated Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth'])->group(function () {
+
+    /*
+    |--------------------------------------------------------------------------
+    | Dashboard (Redirect by Role)
+    |--------------------------------------------------------------------------
+    */
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Profile
+    |--------------------------------------------------------------------------
+    */
+    Route::get('/profile', function () {
+        return view('profile.index');
+    })->name('profile');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Routes
+    |--------------------------------------------------------------------------
+    */
+    Route::middleware(['role:admin'])->group(function () {
+
+        Route::resource('classes', ClassController::class);
+        Route::resource('subjects', SubjectController::class);
+
+        Route::get('/admin/users', function () {
+            return view('admin.users.index');
+        })->name('admin.users');
+
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Guru Routes
+    |--------------------------------------------------------------------------
+    */
+    Route::middleware(['role:guru'])->group(function () {
+
+        Route::resource('questions', QuestionController::class);
+        Route::resource('exams', ExamController::class);
+
+        Route::get('/exams/{exam}/results', [ResultController::class, 'index'])
+            ->name('exams.results');
+
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Siswa Routes
+    |--------------------------------------------------------------------------
+    */
+    Route::middleware(['role:siswa'])->group(function () {
+
+        Route::get('/my-exams', [ExamController::class, 'myExams'])
+            ->name('siswa.exams');
+
+        Route::get('/exams/{exam}/start', [ParticipantController::class, 'start'])
+            ->name('exam.start');
+
+        Route::post('/exams/{exam}/submit', [ParticipantController::class, 'submit'])
+            ->name('exam.submit');
+
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Pimpinan Routes
+    |--------------------------------------------------------------------------
+    */
+    Route::middleware(['role:pimpinan'])->group(function () {
+
+        Route::get('/reports', [ResultController::class, 'reports'])
+            ->name('reports.index');
+
+    });
+
 });
-
-Route::get('testResults', function (){
-    return view('testResults',[
-        'title' => 'Hasil Ujian',
-        'name' => 'Budi santoso',
-        'grades' => Result::all()
-    ]);
-});
-
-Route::get('settings', function (){
-    return view('settings', ['title' => 'Pengaturan', 'name' => 'Budi santoso']);
-});
-
-
-# Authentication Routes LOGIN LOGOUT REGISTER
-
-Route::get('login', [AuthController::class, 'index'])->name('login');
-Route::post('login', [AuthController::class, 'postLogin']) ->name('login.post');
-Route::get('registration', [AuthController::class, 'registration'])->name('register');
-Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post');
-Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
-Route::get('logout', [AuthController::class, 'logout'])->name('logout');
