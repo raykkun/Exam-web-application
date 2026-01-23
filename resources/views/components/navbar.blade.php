@@ -12,15 +12,15 @@
                     <x-nav-link href="schedule" :active="request()->is('schedule')">Jadwal Ujian</x-nav-link>
                     <x-nav-link href="testResults" :active="request()->is('testResults')">Hasil Ujian</x-nav-link>
                     <x-nav-link href="settings" :active="request()->is('settings')">Pengaturan</x-nav-link>
-                    <x-nav-link href="logout" :active="request()->is('logout')">Keluar</x-nav-link>
                     <div class="col-md-2 text-end">
-                @auth
-                    <!-- Link Logout Menggunakan POST sesuai Form di bawah -->
-                    
-
-                    <form id="logout-form" action="logout" method="post" class="d-none">
-                        @csrf
-                        <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
+                        @auth
+                        <!-- Link Logout Menggunakan POST sesuai Form di bawah -->
+                        <form id="logout-form" action="logout" method="post" class="d-none">
+                            @csrf
+                            <x-nav-link href="logout" :active="request()->is('logout')">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
+                                
+                            </x-nav-link>
                     </form>
                     {{-- <a  href="{{ route('logout') }}"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
