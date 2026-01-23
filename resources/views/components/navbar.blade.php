@@ -16,14 +16,16 @@
                     <div class="col-md-2 text-end">
                 @auth
                     <!-- Link Logout Menggunakan POST sesuai Form di bawah -->
-                    <a class="btn btn-outline-danger btn-sm" href="{{ route('logout') }}"
+                    
+
+                    <form id="logout-form" action="logout" method="post" class="d-none">
+                        @csrf
+                        <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
+                    </form>
+                    {{-- <a  href="{{ route('logout') }}"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Logout
-                    </a>
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
+                    </a> --}}
                 @endauth
             </div>
                     

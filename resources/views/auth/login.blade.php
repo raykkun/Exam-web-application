@@ -25,20 +25,27 @@
               LOGIN FORM
               </a>
             </div>
+
+            @if(session('loginError'))
+                <div class="alert alert-danger" role="alert"> 
+                    {{ session('loginError') }}
+                </div>
+            @endif
+
             <h2 class="fs-6 fw-normal text-center text-secondary mb-4">Sign in to your account</h2>
-            <form method="POST" action="{{ route('login.post') }}">
+            <form action="/login" method="POST" >
               @csrf
 
-              @session('error')
+              {{-- @session('loginError')
                   <div class="alert alert-danger" role="alert"> 
-                      {{ $value }}
+                      {{ $loginError }}
                   </div>
-              @endsession
+              @endsession --}}
 
               <div class="row gy-2 overflow-hidden">
                 <div class="col-12">
                   <div class="form-floating mb-3">
-                    <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" placeholder="name@example.com" required>
+                    <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" placeholder="name@example.com" required autofocus value="{{old('email')}}">
                     <label for="email" class="form-label">{{ __('Email Address') }}</label>
                   </div>
                   @error('email')
@@ -46,6 +53,7 @@
                           <strong>{{ $message }}</strong>
                       </span>
                   @enderror
+
                 </div>
                 <div class="col-12">
                   <div class="form-floating mb-3">
@@ -74,9 +82,7 @@
                     <button class="btn btn-primary btn-lg" type="submit">{{ __('Login') }}</button>
                   </div>
                 </div>
-                <div class="col-12">
-                  <p class="m-0 text-secondary text-center">Don't have an account? <a href="{{ route('register') }}" class="link-primary text-decoration-none">Sign up</a></p>
-                </div>
+                
               </div>
             </form>
           </div>

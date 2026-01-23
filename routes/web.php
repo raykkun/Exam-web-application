@@ -10,108 +10,116 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\ResultController;
 
-/*
-|--------------------------------------------------------------------------
-| Public Routes
-|--------------------------------------------------------------------------
-*/
+use App\Http\Controllers\Auth\AuthController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('login', [AuthController::class, 'index']) -> name('login') -> middleware('guest');
+Route::post('login', [AuthController::class, 'authenticate']);
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
-/*
-|--------------------------------------------------------------------------
-| Authentication Routes (Laravel Breeze)
-|--------------------------------------------------------------------------
-*/
+Route::get('/', [DashboardController::class, 'index'])-> middleware('auth');
 
-require __DIR__.'/auth.php';
+// /*
+// |--------------------------------------------------------------------------
+// | Public Routes
+// |--------------------------------------------------------------------------
+// */
 
-/*
-|--------------------------------------------------------------------------
-| Authenticated Routes
-|--------------------------------------------------------------------------
-*/
+// // Route::get('/', function () {
+// //     return view('welcome');
+// // });
 
-Route::middleware(['auth'])->group(function () {
+// /*
+// |--------------------------------------------------------------------------
+// | Authentication Routes (Laravel Breeze)
+// |--------------------------------------------------------------------------
+// */
 
-    /*
-    |--------------------------------------------------------------------------
-    | Dashboard (Redirect by Role)
-    |--------------------------------------------------------------------------
-    */
-    Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->name('dashboard');
+// require __DIR__.'/auth.php';
 
-    /*
-    |--------------------------------------------------------------------------
-    | Profile
-    |--------------------------------------------------------------------------
-    */
-    Route::get('/profile', function () {
-        return view('profile.index');
-    })->name('profile');
+// /*
+// |--------------------------------------------------------------------------
+// | Authenticated Routes
+// |--------------------------------------------------------------------------
+// */
 
-    /*
-    |--------------------------------------------------------------------------
-    | Admin Routes
-    |--------------------------------------------------------------------------
-    */
-    Route::middleware(['role:admin'])->group(function () {
+// Route::middleware(['auth'])->group(function () {
 
-        Route::resource('classes', ClassController::class);
-        Route::resource('subjects', SubjectController::class);
+//     /*
+//     |--------------------------------------------------------------------------
+//     | Dashboard (Redirect by Role)
+//     |--------------------------------------------------------------------------
+//     */
+//     Route::get('/', [AuthController::class, 'dashboard'])
+//         ->name('dashboard');
 
-        Route::get('/admin/users', function () {
-            return view('admin.users.index');
-        })->name('admin.users');
+//     /*
+//     |--------------------------------------------------------------------------
+//     | Profile
+//     |--------------------------------------------------------------------------
+//     */
+//     Route::get('/profile', function () {
+//         return view('profile.index');
+//     })->name('profile');
 
-    });
+//     /*
+//     |--------------------------------------------------------------------------
+//     | Admin Routes
+//     |--------------------------------------------------------------------------
+//     */
+//     Route::middleware(['role:admin'])->group(function () {
 
-    /*
-    |--------------------------------------------------------------------------
-    | Guru Routes
-    |--------------------------------------------------------------------------
-    */
-    Route::middleware(['role:guru'])->group(function () {
+//         Route::resource('classes', ClassController::class);
+//         Route::resource('subjects', SubjectController::class);
 
-        Route::resource('questions', QuestionController::class);
-        Route::resource('exams', ExamController::class);
+//         Route::get('/admin/users', function () {
+//             return view('admin.users.index');
+//         })->name('admin.users');
 
-        Route::get('/exams/{exam}/results', [ResultController::class, 'index'])
-            ->name('exams.results');
+//     });
 
-    });
+//     /*
+//     |--------------------------------------------------------------------------
+//     | Guru Routes
+//     |--------------------------------------------------------------------------
+//     */
+//     Route::middleware(['role:guru'])->group(function () {
 
-    /*
-    |--------------------------------------------------------------------------
-    | Siswa Routes
-    |--------------------------------------------------------------------------
-    */
-    Route::middleware(['role:siswa'])->group(function () {
+//         Route::resource('questions', QuestionController::class);
+//         Route::resource('exams', ExamController::class);
 
-        Route::get('/my-exams', [ExamController::class, 'myExams'])
-            ->name('siswa.exams');
+//         Route::get('/exams/{exam}/results', [ResultController::class, 'index'])
+//             ->name('exams.results');
 
-        Route::get('/exams/{exam}/start', [ParticipantController::class, 'start'])
-            ->name('exam.start');
+//     });
 
-        Route::post('/exams/{exam}/submit', [ParticipantController::class, 'submit'])
-            ->name('exam.submit');
+//     /*
+//     |--------------------------------------------------------------------------
+//     | Siswa Routes
+//     |--------------------------------------------------------------------------
+//     */
+//     Route::middleware(['role:siswa'])->group(function () {
 
-    });
+//         Route::get('/my-exams', [ExamController::class, 'myExams'])
+//             ->name('siswa.exams');
 
-    /*
-    |--------------------------------------------------------------------------
-    | Pimpinan Routes
-    |--------------------------------------------------------------------------
-    */
-    Route::middleware(['role:pimpinan'])->group(function () {
+//         Route::get('/exams/{exam}/start', [ParticipantController::class, 'start'])
+//             ->name('exam.start');
 
-        Route::get('/reports', [ResultController::class, 'reports'])
-            ->name('reports.index');
+//         Route::post('/exams/{exam}/submit', [ParticipantController::class, 'submit'])
+//             ->name('exam.submit');
 
-    });
+//     });
 
-});
+//     /*
+//     |--------------------------------------------------------------------------
+//     | Pimpinan Routes
+//     |--------------------------------------------------------------------------
+//     */
+//     Route::middleware(['role:pimpinan'])->group(function () {
+
+//         Route::get('/reports', [ResultController::class, 'reports'])
+//             ->name('reports.index');
+
+//     });
+
+// });
