@@ -41,6 +41,12 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+// $app->withMiddleware(function ($middleware) {
+//     $middleware->alias([
+//         'role' => \App\Http\Middleware\RoleMiddleware::class,
+//     ]);
+// });
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application

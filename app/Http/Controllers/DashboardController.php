@@ -17,4 +17,11 @@ class DashboardController extends Controller
         // }
         // return redirect('login')->withsuccess('You are not allowed to access');
     }
+
+    public function student(){
+        return view('student.dashboard', [
+            'title' => 'Dashboard Siswa',
+            'name' => auth()->user()->name // Ambil nama asli dari DB
+        ]);
+    }
 }

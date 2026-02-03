@@ -17,6 +17,7 @@ use App\Http\Controllers\Auth\AuthController;
 */
 Route::middleware('guest')->group(function () {
 
+    Route::get('/', [AuthController::class, 'index']);  
     // Register
     // Route::get('register', [RegisteredUserController::class, 'create'])
     //     ->name('register');
@@ -24,11 +25,12 @@ Route::middleware('guest')->group(function () {
     // Route::post('register', [RegisteredUserController::class, 'store']);
 
     // Login
-    Route::get('login', [AuthController::class, 'login'])
-        ->name('login');
+    // Route::get('login', [AuthController::class, 'login'])
+    //     ->name('login');
 
-    Route::post('post-login', [AuthController::class, 'postLogin'])
-        ->name('login.post');
+    Route::get('login', [AuthController::class, 'index'])->name('login');
+    Route::post('login', [AuthController::class, 'authenticate']);
+    
 
     // // Forgot password
     // Route::get('forgot-password', [AuthController::class, 'create'])
@@ -53,8 +55,8 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
 
     // Email verification
-    Route::get('login', [AuthController::class, 'index'])
-        ->name('login');
+    // Route::get('login', [AuthController::class, 'index'])
+    //     ->name('login');
 
     // Route::get('verify-email/{id}/{hash}', AuthController::class)
     //     ->middleware(['signed', 'throttle:6,1'])
@@ -66,12 +68,12 @@ Route::middleware('auth')->group(function () {
     //     ->name('verification.send');
 
     // Confirm password
-    Route::get('confirm-password', [AuthController::class, 'show'])
-        ->name('password.confirm');
+    // Route::get('confirm-password', [AuthController::class, 'show'])
+    //     ->name('password.confirm');
 
-    Route::post('confirm-password', [AuthController::class, 'store']);
+    // Route::post('confirm-password', [AuthController::class, 'store']);
 
     // Logout
-    Route::post('logout', [AuthController::class, 'destroy'])
+    Route::post('logout', [AuthController::class, 'logout'])
         ->name('logout');
 });

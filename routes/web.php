@@ -11,12 +11,54 @@ use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\ResultController;
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Middleware\RoleMiddleware;
 
-Route::get('login', [AuthController::class, 'index']) -> name('login') -> middleware('guest');
-Route::post('login', [AuthController::class, 'authenticate']);
+
+// Route::get('login', [AuthController::class, 'index']) -> name('login') -> middleware('guest');
+// Route::post('login', [AuthController::class, 'authenticate']);
+ Route::get('/home', function () {
+        return view('home');
+    })->name('home');
+// Route::middleware(['guest'])->group(function () {
+//     Route::get('/', [AuthController::class, 'index']);  
+
+//     Route::get('login', [AuthController::class, 'index'])->name('login');
+//     Route::post('login', [AuthController::class, 'authenticate']);
+    
+   
+// });
+
+
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/', [DashboardController::class, 'index'])-> middleware('auth');
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/dashboard', function () {
+        return view('admin.dashboard');
+    });
+    
+});
+
+Route::middleware(['auth', 'role:teacher'])->group(function () {
+    Route::get('teacher/dashboard', function () {
+        return view('teacher.dashboard');
+    })->name('teacher.dashboard');
+    // Route::get('/', [AuthController::class, 'index']);  
+});
+
+// Route::middleware(['auth', 'role:student'])->group(function () {
+//     Route::get('student/dashboard', function () {
+//         return view('student.dashboard');
+//     })->name('student.dashboard');
+//     // Route::get('/', [AuthController::class, 'index']);  
+// });
+
+
+
+
+
+// Route::middleware('auth')->group(function () {
+    
+// });
 
 // /*
 // |--------------------------------------------------------------------------
@@ -34,7 +76,7 @@ Route::get('/', [DashboardController::class, 'index'])-> middleware('auth');
 // |--------------------------------------------------------------------------
 // */
 
-// require __DIR__.'/auth.php';
+require __DIR__.'/auth.php';
 
 // /*
 // |--------------------------------------------------------------------------
@@ -42,7 +84,7 @@ Route::get('/', [DashboardController::class, 'index'])-> middleware('auth');
 // |--------------------------------------------------------------------------
 // */
 
-// Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
 //     /*
 //     |--------------------------------------------------------------------------
@@ -97,18 +139,22 @@ Route::get('/', [DashboardController::class, 'index'])-> middleware('auth');
 //     | Siswa Routes
 //     |--------------------------------------------------------------------------
 //     */
-//     Route::middleware(['role:siswa'])->group(function () {
+    Route::middleware(['role:student'])->group(function () {
+        
+        Route::get('student/dashboard', [DashboardController::class, 'student'])
+            ->name('student.dashboard');
+    
 
-//         Route::get('/my-exams', [ExamController::class, 'myExams'])
-//             ->name('siswa.exams');
+        Route::get('/my-exams', [ExamController::class, 'myExams'])
+            ->name('siswa.exams');
 
-//         Route::get('/exams/{exam}/start', [ParticipantController::class, 'start'])
-//             ->name('exam.start');
+        Route::get('/exams/{exam}/start', [ParticipantController::class, 'start'])
+            ->name('exam.start');
 
-//         Route::post('/exams/{exam}/submit', [ParticipantController::class, 'submit'])
-//             ->name('exam.submit');
+        Route::post('/exams/{exam}/submit', [ParticipantController::class, 'submit'])
+            ->name('exam.submit');
 
-//     });
+    });
 
 //     /*
 //     |--------------------------------------------------------------------------
@@ -122,4 +168,4 @@ Route::get('/', [DashboardController::class, 'index'])-> middleware('auth');
 
 //     });
 
-// });
+});

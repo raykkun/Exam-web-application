@@ -10,12 +10,14 @@ use App\Models\User;
 use Hash;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
-
+use Closure;
+// use App\Http\Middleware\RoleMiddleware;
 
 class AuthController extends Controller
 {
     public function index(){
         return view('auth.login', ['title' => 'Login']);
+        // redirect()->intended('login');
     }
 
     public function authenticate(Request $request): RedirectResponse
@@ -24,12 +26,24 @@ class AuthController extends Controller
             'email' => 'required|email:dns',
             'password' => 'required',
         ]);
+        // dd($credentials);
         if(Auth::attempt($credentials)){
             $request->session()->regenerate();
-            return redirect()->intended('/');
+
+            $user = Auth::user();
+
+            return match ($user->role) {
+                'admin' => redirect()->intended('/admin/dashboard'),
+                'teacher' => redirect()->intended('/teacher/dashboard'),
+                'student' => redirect()->intended('/student/dashboard'),
+                default => redirect()->intended('dashboard'),
+            };
+           
+
+            // return redirect()->intended('/');
         }
 
-        return back()->with('loginError', 'Login failed! Please check your credentials.');
+        return back()->withError('loginError', 'Login failed! Please check your credentials.');
     }
 
     // /**
