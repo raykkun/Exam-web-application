@@ -1,17 +1,18 @@
+@props(['title'])
 <!DOCTYPE html>
 <html lang="en" class="h-full bg-gray-900">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
-    <title>{{ $title }}</title>
+    <title>{{ $title ?? "Title Not Found!" }}</title>
     
 </head>
 <body class="h-full">
     <div class="min-h-full">
         <x-navbar></x-navbar>
 
-        <x-header>{{ $title }}</x-header>
+        <x-header>{{ $title ?? "Title Not Found!" }}</x-header>
         <main>
             <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
             {{ $slot }}

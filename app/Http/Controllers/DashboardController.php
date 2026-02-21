@@ -18,6 +18,14 @@ class DashboardController extends Controller
         // return redirect('login')->withsuccess('You are not allowed to access');
     }
 
+    public function admin(){
+        $data = ['title' => 'Dashboard Admin',
+                'name' => auth()->user()->name 
+                ];// Ambil nama asli dari DB]
+        
+        return view('admin.dashboard', $data);
+    }
+
     public function student(){
         return view('student.dashboard', [
             'title' => 'Dashboard Siswa',

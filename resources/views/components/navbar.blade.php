@@ -7,27 +7,30 @@
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
-                    <!-- Current: "bg-gray-950/50 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
-                    <x-nav-link href="/" :active="request()->is('/')">Beranda</x-nav-link>
-                    <x-nav-link href="schedule" :active="request()->is('schedule')">Jadwal Ujian</x-nav-link>
-                    <x-nav-link href="testResults" :active="request()->is('testResults')">Hasil Ujian</x-nav-link>
-                    <x-nav-link href="settings" :active="request()->is('settings')">Pengaturan</x-nav-link>
-                    <div class="col-md-2 text-end">
-                        @auth
-                        <!-- Link Logout Menggunakan POST sesuai Form di bawah -->
-                        <form id="logout" action="logout" method="post" class="d-none">
-                            @csrf
-                            <x-nav-link href="logout" :active="request()->is('logout')">
-                                <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
-                                
-                            </x-nav-link>
-                        </form>
-                    {{-- <a  href="{{ route('logout') }}"
-                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        Logout
-                    </a> --}}
-                        @endauth
-                    </div>
+                    
+                        @foreach ($navMenu as $item)
+                            
+                        <!-- Current: "bg-gray-950/50 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
+                        <x-nav-link href="{{ $item['url'] }}" :active="request()->is($item['url'])">{{ $item['label'] }}</x-nav-link>
+                        <x-nav-link href="settings" :active="request()->is('settings')">Pengaturan</x-nav-link>
+                        @endforeach
+
+                        <div class="col-md-2 text-end">
+                            @auth
+                            <!-- Link Logout Menggunakan POST sesuai Form di bawah -->
+                            <form id="logout" action="logout" method="post" class="d-none">
+                                @csrf
+                                <x-nav-link href="logout" :active="request()->is('logout')">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
+                                    
+                                </x-nav-link>
+                            </form>
+                        {{-- <a  href="{{ route('logout') }}"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Logout
+                        </a> --}}
+                            @endauth
+                        </div>
                     
                     </div>
                 </div>

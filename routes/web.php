@@ -31,12 +31,7 @@ use App\Http\Middleware\RoleMiddleware;
 
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard');
-    });
-    
-});
+
 
 Route::middleware(['auth', 'role:teacher'])->group(function () {
     Route::get('teacher/dashboard', function () {
@@ -108,16 +103,25 @@ Route::middleware(['auth'])->group(function () {
 //     | Admin Routes
 //     |--------------------------------------------------------------------------
 //     */
-//     Route::middleware(['role:admin'])->group(function () {
+// Route::middleware(['auth', 'role:admin'])->group(function () {
+    
+    
+// });
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('/admin/dashboard', [DashboardController::class, 'admin'])->name('admin.dashboard');
 
-//         Route::resource('classes', ClassController::class);
-//         Route::resource('subjects', SubjectController::class);
+        Route::resource('classes', ClassController::class);
+        Route::resource('subjects', SubjectController::class);
+        Route::resource('exams', ExamController::class);
+        Route::resource('questions', QuestionController::class);
+        Route::resource('participants', ParticipantController::class);
+        Route::get('/results', [ResultController::class, 'index'])->name('results.index');
 
-//         Route::get('/admin/users', function () {
-//             return view('admin.users.index');
-//         })->name('admin.users');
+        Route::get('/admin/users', function () {
+            return view('admin.users.index');
+        })->name('admin.users');
 
-//     });
+    });
 
 //     /*
 //     |--------------------------------------------------------------------------
