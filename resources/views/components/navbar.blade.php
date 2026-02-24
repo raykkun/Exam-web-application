@@ -12,7 +12,7 @@
                             
                         <!-- Current: "bg-gray-950/50 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
                         <x-nav-link href="{{ $item['url'] }}" :active="request()->is($item['url'])">{{ $item['label'] }}</x-nav-link>
-                        <x-nav-link href="settings" :active="request()->is('settings')">Pengaturan</x-nav-link>
+                        {{-- <x-nav-link href="settings" :active="request()->is('settings')">Pengaturan</x-nav-link> --}}
                         @endforeach
 
                         <div class="col-md-2 text-end">
