@@ -45,29 +45,22 @@
 
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Stock
+                        Description
                     </th>
                     <td class="px-6 py-4">
-                        {{ $subject->stock }}
+                        {{ $subject->description }}
                     </td>
                 </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Price
-                    </th>
-                    <td class="px-6 py-4">
-                        {{ $subject->price }}
-                    </td>
-                </tr>
+                
                 </tbody>
             </table>
         </div>
 
     </div>
 
-    <a href="{{ route('subject.index') }}"
+    <a href="{{ route('subjects.index') }}"
        class="mt-3 inline-block px-6 py-2.5 bg-gray-200 text-gray-700 font-medium text-xs leading-tight uppercase rounded-full ">back</a>
-    <a href="{{ route('subject.edit', $subject) }}"
+    <a href="{{ route('subjects.edit', $subject) }}"
        class="inline-block px-6 py-2.5 bg-blue-400 text-white font-medium text-xs leading-tight uppercase rounded-full"
        id="edit-subject-btn">Edit Product</a>
 
