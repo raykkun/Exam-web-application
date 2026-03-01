@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
             $menu = match($role){
                 'admin' => [
                     ['label' => 'Dashboard', 'url' => route('admin.dashboard')],
-                    ['label' => 'Manage Classes', 'url' => route('classes.index')],
+                    ['label' => 'Manage Classroom', 'url' => route('classrooms.index')],
                     ['label' => 'Manage Subjects', 'url' => route('subjects.index')],
                     ['label' => 'Manage Exams', 'url' => route('exams.index')],
                     ['label' => 'Manage Questions', 'url' => route('questions.index')],
