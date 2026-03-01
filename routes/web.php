@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ClassController;
+use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\QuestionController;
@@ -110,7 +110,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['role:admin'])->group(function () {
         Route::get('/admin/dashboard', [DashboardController::class, 'admin'])->name('admin.dashboard');
 
-        Route::resource('classes', ClassController::class);
+        Route::resource('classrooms', ClassroomController::class);
         Route::resource('subjects', SubjectController::class);
         Route::resource('exams', ExamController::class);
         Route::resource('questions', QuestionController::class);
