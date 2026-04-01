@@ -26,10 +26,19 @@ class DashboardController extends Controller
         return view('admin.dashboard', $data);
     }
 
+    public function teacher(){
+        $data = ['title' => 'Dashboard Teacher',
+                'name' => auth()->user()->name
+                ];
+        
+        return view('teacher.dashboard', $data);
+    }
+
     public function student(){
         return view('student.dashboard', [
             'title' => 'Dashboard Siswa',
             'name' => auth()->user()->name // Ambil nama asli dari DB
         ]);
     }
+
 }

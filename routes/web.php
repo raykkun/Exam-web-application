@@ -6,7 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\ExamController;
-use App\Http\Controllers\QuestionController;
+// use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\ResultController;
 
@@ -29,16 +29,16 @@ use App\Http\Middleware\RoleMiddleware;
 // });
 
 
-Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+// Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 
 
-Route::middleware(['auth', 'role:teacher'])->group(function () {
-    Route::get('teacher/dashboard', function () {
-        return view('teacher.dashboard');
-    })->name('teacher.dashboard');
-    // Route::get('/', [AuthController::class, 'index']);  
-});
+// Route::middleware(['auth', 'role:teacher'])->group(function () {
+//     Route::get('teacher/dashboard', function () {
+//         return view('teacher.dashboard');
+//     })->name('teacher.dashboard');
+//     // Route::get('/', [AuthController::class, 'index']);  
+// });
 
 // Route::middleware(['auth', 'role:student'])->group(function () {
 //     Route::get('student/dashboard', function () {
@@ -113,9 +113,9 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('classrooms', ClassroomController::class);
         Route::resource('subjects', SubjectController::class);
         Route::resource('exams', ExamController::class);
-        Route::resource('questions', QuestionController::class);
-        Route::resource('participants', ParticipantController::class);
-        Route::get('/results', [ResultController::class, 'index'])->name('results.index');
+        // Route::resource('questions', QuestionController::class);
+        // Route::resource('participants', ParticipantController::class);
+        // Route::get('/results', [ResultController::class, 'index'])->name('results.index');
 
         Route::get('/admin/users', function () {
             return view('admin.users.index');
@@ -128,6 +128,21 @@ Route::middleware(['auth'])->group(function () {
 //     | Guru Routes
 //     |--------------------------------------------------------------------------
 //     */
+    Route::middleware(['role:teacher'])->group(function () {
+        Route::get('/teacher/dashboard', [DashboardController::class, 'teacher'])->name('teacher.dashboard');
+
+        Route::get('/my-classrooms', function () {
+            return view('teacher.classrooms');
+        })->name('teacher.classrooms');
+
+        Route::get('/my-subjects', function () {
+            return view('teacher.subjects.index');
+        })->name('teacher.subjects');
+
+        Route::resource('/teacher/my-exams', ExamController::class);
+        // Route::resource('Exams', ExamController::class);
+        
+    });
 //     Route::middleware(['role:guru'])->group(function () {
 
 //         Route::resource('questions', QuestionController::class);
@@ -149,14 +164,14 @@ Route::middleware(['auth'])->group(function () {
             ->name('student.dashboard');
     
 
-        Route::get('/my-exams', [ExamController::class, 'myExams'])
+        Route::get('/m', [ExamController::class, 'myExams'])
             ->name('siswa.exams');
 
-        Route::get('/exams/{exam}/start', [ParticipantController::class, 'start'])
-            ->name('exam.start');
+        // Route::get('/exams/{exam}/start', [ParticipantController::class, 'start'])
+            // ->name('exam.start');
 
-        Route::post('/exams/{exam}/submit', [ParticipantController::class, 'submit'])
-            ->name('exam.submit');
+        // Route::post('/exams/{exam}/submit', [ParticipantController::class, 'submit'])
+            // ->name('exam.submit');
 
     });
 

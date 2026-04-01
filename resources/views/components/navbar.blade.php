@@ -18,13 +18,14 @@
                         <div class="col-md-2 text-end">
                             @auth
                             <!-- Link Logout Menggunakan POST sesuai Form di bawah -->
-                            <form id="logout" action="logout" method="post" class="d-none">
+                            <form id="logout" action="{{ route('logout') }}" method="post" class="d-none">
                                 @csrf
-                                <x-nav-link href="logout" :active="request()->is('logout')">
+                                <x-nav-link href="{{ route('logout') }}" :active="request()->is('logout')">
                                     <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
                                     
                                 </x-nav-link>
                             </form>
+                            
                         {{-- <a  href="{{ route('logout') }}"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             Logout
