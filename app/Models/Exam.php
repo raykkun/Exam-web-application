@@ -20,4 +20,24 @@ class Exam extends Model
         'status',
         'settings'
     ];
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
+    }
+
+    public function classroom()
+    {
+        return $this->belongsTo(Classroom::class);
+    }
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'creator_id');
+    }
 }

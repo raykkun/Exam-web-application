@@ -17,5 +17,17 @@ class Question extends Model
         'option_c',
         'option_d',
         'correct_answer',
+        'score',
+        'created_by',
     ];
+
+    public function exam()
+    {
+        return $this->belongsTo(Exam::class);
+    }
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }

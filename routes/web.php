@@ -6,7 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\ExamController;
-// use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\ResultController;
 
@@ -139,7 +139,9 @@ Route::middleware(['auth'])->group(function () {
             return view('teacher.subjects.index');
         })->name('teacher.subjects');
 
-        Route::resource('/teacher/my-exams', ExamController::class);
+        Route::resource('teacher/exams', ExamController::class, ['as' => 'teacher']);
+       
+        Route::resource('teacher/questions', QuestionController::class, ['as' => 'teacher']);
         // Route::resource('Exams', ExamController::class);
         
     });

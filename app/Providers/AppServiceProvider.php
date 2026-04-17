@@ -37,7 +37,9 @@ class AppServiceProvider extends ServiceProvider
                     ['label' => 'Dashboard', 'url' => route('teacher.dashboard')],
                     ['label' => 'My Classrooms', 'url' => route('teacher.classrooms')],
                     ['label' => 'My Subjects', 'url' => route('teacher.subjects')],
-                    ['label' => 'My Exams', 'url' => route('exams.index')],
+
+                    // Part Exam management for teachers
+                    ['label' => 'My Exams', 'url' => route('teacher.exams.index')],
                     // ['label' => 'Results', 'url' => route('teacher.results')],
                 ],
                 'student' => [

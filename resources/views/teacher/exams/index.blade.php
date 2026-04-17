@@ -9,7 +9,7 @@
         </div>
         <div class="col-span-4">
             <div class="flex justify-end">
-                <a href="{{ route('exams.create') }}"
+                <a href="{{ route('teacher.exams.create') }}"
                    class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
                    id="add-exam-btn">Add Exam</a>
             </div>
@@ -33,13 +33,25 @@
                         Exam name
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Code
+                        Code Subject
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Stock
+                        Classroom
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Price
+                        Creator
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Start At
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Ends At
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Duration
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Status
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Action
@@ -50,30 +62,43 @@
                 @forelse ($exams as $exam)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
                         <td class="px-6 py-4">
-                            {{ $loop->iteration }}
+                            {{ $exams->firstItem() + $loop->index }}
                         </td>
                         <td class="px-6 py-4">
-                            {{ $exam->name}}
+                            {{ $exam->title}}
                         </td>
                         <td class="px-6 py-4">
-                            {{ $exam->code }}
+                            {{ $exam->subject->name ?? '-' }}
                         </td>
                         <td class="px-6 py-4">
-                            {{ $exam->stock }}
+                            {{ $exam->classroom->name ?? '-' }}
                         </td>
                         <td class="px-6 py-4">
-                            {{ $exam->price}}
+                            {{ $exam->creator->name ?? '-' }}
                         </td>
+                        <td class="px-6 py-4">
+                            {{ $exam->start_at }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $exam->ends_at }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $exam->duration }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $exam->status }}
+                        </td>
+
                         <td class="px-6 py-4">
                             <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                  action="{{ route('exam.destroy', $exam) }}" method="POST">
+                                  action="{{ route('teacher.exams.destroy', $exam) }}" method="POST">
 
                                 @csrf
                                 @method('DELETE')
-                                <a href="{{ route('exam.show', $exam) }}" id="{{ $exam->id }}-edit-btn"
+                                <a href="{{ route('teacher.exams.show', $exam) }}" id="{{ $exam->id }}-edit-btn"
                                    class="inline-block px-6 py-2.5 bg-blue-400 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-500 hover:shadow-lg focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out">View</a>
 
-                                <a href="{{ route('exam.edit', $exam) }}" id="{{ $exam->id }}-edit-btn"
+                                <a href="{{ route('teacher.exams.edit', $exam) }}" id="{{ $exam->id }}-edit-btn"
                                    class="inline-block px-6 py-2.5 bg-blue-400 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-500 hover:shadow-lg focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out">Edit</a>
 
                                 <button type="submit"
