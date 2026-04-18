@@ -42,8 +42,8 @@ class ExamController extends Controller
      * Store a newly created resource in storage.
      */
    
-public function store(Request $request)
-{
+    public function store(Request $request)
+    {
     $data = $request->validate([
         'title' => 'required|string|max:255',
         'subject_id' => 'required|exists:subjects,id',
@@ -56,19 +56,13 @@ public function store(Request $request)
     ]);
 
     Exam::create($data);
-    return redirect()->route('teacher.exams.index');
-
+    return redirect()->route('teacher.exams.index')->with('success', 'Exam created successfully.');
 
     }
 
     /**
      * Display the specified resource.
      */
-
-    // public function show ($id){
-    //     $exam = Exam::with(['subject', 'classroom', 'creator'])->findOrFail($id);
-    //     return view('teacher.exams.show', compact('exam'));
-    // }
 
     public function show(Exam $exam)
     {
@@ -107,7 +101,7 @@ public function store(Request $request)
 
         $exam->update($data);
 
-        return redirect()->route('teacher.exams.show', $exam)->with('success', 'Exam updated successfully.');
+        return redirect()->route('teacher.exams.index', $exam)->with('success', 'Exam updated successfully.');
     }
 
     /**
