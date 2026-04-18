@@ -1,8 +1,8 @@
 <x-layout :title="$title">
     
-<div class="container mx-auto mt-10 mb-10 px-10">
+<div class="container mx-auto">
     <div class="grid grid-cols-8 gap-4 mb-4 p-5">
-        <div class="col-span-4 mt-2">
+        <div class="col-span-4">
             <h1 class="text-3xl font-bold">
                 Exams List
             </h1>
@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-    <div class="bg-white p-5 rounded shadow-sm">
+    <div class="bg-white p-1 rounded shadow-sm">
         <!-- Notifikasi menggunakan flash session data -->
         @if (session('success'))
             <div class="p-3 rounded bg-green-500 text-green-100 mb-4">
@@ -26,16 +26,16 @@
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-3 py-3">
                         No
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Exam name
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Code Subject
+                        Subject Name
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-4 py-3">
                         Classroom
                     </th>
                     <th scope="col" class="px-6 py-3">
@@ -47,7 +47,7 @@
                     <th scope="col" class="px-6 py-3">
                         Ends At
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-11 py-3">
                         Duration
                     </th>
                     <th scope="col" class="px-6 py-3">
@@ -61,7 +61,7 @@
                 <tbody>
                 @forelse ($exams as $exam)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                        <td class="px-6 py-4">
+                        <td class="px-3 py-4">
                             {{ $exams->firstItem() + $loop->index }}
                         </td>
                         <td class="px-6 py-4">
@@ -82,8 +82,8 @@
                         <td class="px-6 py-4">
                             {{ $exam->ends_at }}
                         </td>
-                        <td class="px-6 py-4">
-                            {{ $exam->duration }}
+                        <td class="px-8 py-4">
+                            {{ $exam->duration }} Minutes
                         </td>
                         <td class="px-6 py-4">
                             {{ $exam->status }}
