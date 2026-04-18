@@ -56,7 +56,7 @@ public function store(Request $request)
     ]);
 
     Exam::create($data);
-    return redirect()->route('teacher.my-exams.index');
+    return redirect()->route('teacher.exams.index');
 
 
     }
@@ -107,7 +107,7 @@ public function store(Request $request)
 
         $exam->update($data);
 
-        return redirect()->route('teacher.my-exams.show', $exam)->with('success', 'Exam updated successfully.');
+        return redirect()->route('teacher.exams.show', $exam)->with('success', 'Exam updated successfully.');
     }
 
     /**
@@ -117,7 +117,7 @@ public function store(Request $request)
     {
         $exam->delete();
 
-        return redirect()->route('teacher.my-exams.index')->with('success', 'Exam deleted successfully.');
+        return redirect()->route('teacher.exams.index')->with('success', 'Exam deleted successfully.');
     }
 
     
