@@ -1,7 +1,13 @@
 <x-layout :title="'Exam Detail - ' . $exam->title">
     <div class="space-y-6">
         <div class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+             @if (session('success'))
+                    <div class="p-3 rounded bg-green-500 text-green-100 mb-4">
+                        {{ session('success') }}
+                    </div>
+                @endif
             <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+               
                 <div>
                     <p class="text-sm uppercase tracking-[0.2em] text-slate-500">Exam detail</p>
                     <h1 class="mt-2 text-3xl font-semibold text-slate-900">{{ $exam->title }}</h1>
@@ -77,6 +83,7 @@
                     <h2 class="mt-2 text-2xl font-semibold text-slate-900">Exam question list</h2>
                     <p class="mt-2 text-sm text-slate-600">Review question options, scores, and the correct answer for each item.</p>
                 </div>
+
                 <span class="rounded-full bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700">{{ $exam->questions->count() }} items</span>
             </div>
 
@@ -88,6 +95,15 @@
                                 <p class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Question {{ $loop->iteration }}</p>
                                 <p class="mt-3 text-base font-medium text-slate-900">{{ $question->question_text }}</p>
                             </div>
+
+                            <form onsubmit="return confirm('Are You Sure ?');" 
+                            action="{{ route('teacher.questions.destroy', $question) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <a class="rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700 hover:bg-green-200" href="{{ route('teacher.questions.edit', $question) }}">Edit Questions</a>
+                                <button type="submit" class="rounded-full bg-red-100 px-4 py-2 text-sm font-semibold text-red-700 hover:bg-red-200">Delete Question</button>
+                            </form>
+
                             <div class="rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200">Score: {{ $question->score }}</div>
                         </div>
 
