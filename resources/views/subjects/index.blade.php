@@ -47,7 +47,8 @@
                 @forelse ($subjects as $subject)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
                         <td class="px-6 py-4">
-                            {{ $exams->firstItem() + $loop->index }}
+                            {{-- {{ $subject->firstItem() + $loop->index }} --}}
+                            {{ $loop->iteration }}
                         </td>
                         <td class="px-6 py-4">
                             {{ $subject->name}}
