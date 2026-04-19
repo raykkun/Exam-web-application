@@ -32,7 +32,8 @@ class AppServiceProvider extends ServiceProvider
                     // ['label' => 'Manage Questions', 'url' => route('questions.index')],
                     // ['label' => 'Manage Participants', 'url' => route('participants.index')],
                     // ['label' => 'View Results', 'url' => route('results.index')],
-                ],
+                    ['label' => 'Users', 'url' => route('admin.users.index')],
+                    ],
                 'teacher' => [
                     ['label' => 'Dashboard', 'url' => route('teacher.dashboard')],
                     ['label' => 'My Classrooms', 'url' => route('teacher.classrooms')],
