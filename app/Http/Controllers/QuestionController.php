@@ -83,7 +83,7 @@ class QuestionController extends Controller
 
         $question->update($data);
 
-        return redirect()->route('teacher.my-exams.show', $question->exam_id)->with('success', 'Question updated successfully.');
+        return redirect()->route('teacher.exams.show', $question->exam_id)->with('success', 'Question updated successfully.');
     }
 
     /**
@@ -94,6 +94,6 @@ class QuestionController extends Controller
         $exam_id = $question->exam_id;
         $question->delete();
 
-        return redirect()->route('teacher.my-exams.show', $exam_id)->with('success', 'Question deleted successfully.');
+        return redirect()->route('teacher.exams.show', $exam_id)->with('success', 'Question deleted successfully.');
     }
 }
