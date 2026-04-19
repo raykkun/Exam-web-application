@@ -9,6 +9,7 @@ use App\Http\Controllers\ExamController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\ResultController;
+use App\Http\Controllers\UserController;
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Middleware\RoleMiddleware;
@@ -117,9 +118,7 @@ Route::middleware(['auth'])->group(function () {
         // Route::resource('participants', ParticipantController::class);
         // Route::get('/results', [ResultController::class, 'index'])->name('results.index');
 
-        Route::get('/admin/users', function () {
-            return view('admin.users.index');
-        })->name('admin.users');
+        Route::resource('admin/users', UserController::class, ['as' => 'admin']);
 
     });
 
