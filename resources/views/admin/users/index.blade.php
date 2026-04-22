@@ -20,6 +20,7 @@
                     <th class="px-4 py-3">Name</th>
                     <th class="px-4 py-3">Email</th>
                     <th class="px-4 py-3">Role</th>
+                    <th class="px-4 py-3">Classroom</th>
                     <th class="px-4 py-3">Joined</th>
                     <th class="px-4 py-3">Actions</th>
                 </tr>
@@ -30,6 +31,7 @@
                         <td class="px-4 py-4 font-medium text-white">{{ $user->name }}</td>
                         <td class="px-4 py-4 text-gray-300">{{ $user->email }}</td>
                         <td class="px-4 py-4 text-gray-300">{{ ucfirst($user->role) }}</td>
+                        <td class="px-4 py-4 text-gray-300">{{ $user->classroom ? $user->classroom->name : '-' }}</td>
                         <td class="px-4 py-4 text-gray-300">{{ $user->created_at->format('d M Y') }}</td>
                         <td class="px-4 py-4 space-x-2">
                             <a href="{{ route('admin.users.show', $user) }}" class="rounded-md bg-slate-700 px-3 py-1 text-xs font-semibold text-white hover:bg-slate-600">Profile</a>
@@ -43,7 +45,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="px-4 py-8 text-center text-gray-400">No users found. Create the first user to get started.</td>
+                        <td colspan="6" class="px-4 py-8 text-center text-gray-400">No users found. Create the first user to get started.</td>
                     </tr>
                 @endforelse
             </tbody>

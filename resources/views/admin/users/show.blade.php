@@ -27,6 +27,10 @@
                     <dd class="mt-1 text-white">{{ ucfirst($user->role) }}</dd>
                 </div>
                 <div>
+                    <dt class="font-medium text-gray-400">Classroom</dt>
+                    <dd class="mt-1 text-white">{{ $user->classroom ? $user->classroom->name : 'Not assigned' }}</dd>
+                </div>
+                <div>
                     <dt class="font-medium text-gray-400">Joined</dt>
                     <dd class="mt-1 text-white">{{ $user->created_at->format('d M Y H:i') }}</dd>
                 </div>

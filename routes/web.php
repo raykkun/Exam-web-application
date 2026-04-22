@@ -8,7 +8,7 @@ use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ParticipantController;
-use App\Http\Controllers\ResultController;
+use App\Http\Controllers\StudentProfileController;
 use App\Http\Controllers\UserController;
 
 use App\Http\Controllers\Auth\AuthController;
@@ -164,15 +164,32 @@ Route::middleware(['auth'])->group(function () {
         Route::get('student/dashboard', [DashboardController::class, 'student'])
             ->name('student.dashboard');
     
+        Route::get('student/profile', [StudentProfileController::class, 'show'])
+            ->name('student.profile.show');
+        Route::get('student/profile/edit', [StudentProfileController::class, 'edit'])
+            ->name('student.profile.edit');
+        Route::put('student/profile', [StudentProfileController::class, 'update'])
+            ->name('student.profile.update');
+        Route::delete('student/profile/avatar', [StudentProfileController::class, 'destroyAvatar'])
+            ->name('student.profile.avatar.destroy');
 
-        Route::get('/m', [ExamController::class, 'myExams'])
-            ->name('siswa.exams');
+        Route::get('student/exams', [ExamController::class, 'myExams'])
+            ->name('student.exams');
 
-        // Route::get('/exams/{exam}/start', [ParticipantController::class, 'start'])
-            // ->name('exam.start');
+        Route::get('student/exams/{exam}', [ExamController::class, 'showExam'])
+            ->name('student.exam.show');
 
-        // Route::post('/exams/{exam}/submit', [ParticipantController::class, 'submit'])
-            // ->name('exam.submit');
+        Route::get('student/exams/{exam}/start', [ExamController::class, 'startExam'])
+            ->name('student.exam.start');
+
+        Route::post('student/exams/{exam}/submit', [ExamController::class, 'submitExam'])
+            ->name('student.exam.submit');
+
+        Route::get('student/results', [ExamController::class, 'myResults'])
+            ->name('student.results');
+
+        Route::get('student/results/{result}', [ExamController::class, 'showResult'])
+            ->name('student.result.show');
 
     });
 

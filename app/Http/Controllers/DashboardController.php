@@ -41,4 +41,9 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function studentProfile(){
+        $user = auth()->user();
+        return view('student.profile', compact('user'));
+    }
+
 }

@@ -21,6 +21,17 @@ class Exam extends Model
         'settings'
     ];
 
+    protected $casts = [
+        'start_at' => 'datetime',
+        'ends_at' => 'datetime',
+        'settings' => 'array',
+    ];
+
+    public function results()
+    {
+        return $this->hasMany(Result::class);
+    }
+
     public function questions()
     {
         return $this->hasMany(Question::class);

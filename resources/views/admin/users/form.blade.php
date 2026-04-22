@@ -27,6 +27,17 @@
             @error('role')<p class="mt-1 text-sm text-red-400">{{ $message }}</p>@enderror
         </div>
 
+        <div id="classroom-field" style="{{ old('role', $user?->role) === 'student' ? '' : 'display: none;' }}">
+            <label for="classroom_id" class="block text-sm font-medium text-gray-200">Classroom</label>
+            <select name="classroom_id" id="classroom_id" class="mt-1 block w-full rounded-md border-gray-700 bg-gray-900 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                <option value="">Select classroom</option>
+                @foreach(\App\Models\Classroom::orderBy('name')->get() as $classroom)
+                    <option value="{{ $classroom->id }}" {{ old('classroom_id', $user?->classroom?->id) == $classroom->id ? 'selected' : '' }}>{{ $classroom->name }}</option>
+                @endforeach
+            </select>
+            @error('classroom_id')<p class="mt-1 text-sm text-red-400">{{ $message }}</p>@enderror
+        </div>
+
         <div>
             <label for="password" class="block text-sm font-medium text-gray-200">Password</label>
             <input type="password" name="password" id="password" class="mt-1 block w-full rounded-md border-gray-700 bg-gray-900 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" {{ isset($user) ? '' : 'required' }} />
@@ -47,3 +58,13 @@
         <a href="{{ route('admin.users.index') }}" class="text-sm text-gray-300 hover:text-white">Back to user list</a>
     </div>
 </div>
+<script>
+document.getElementById('role').addEventListener('change', function() {
+    const classroomField = document.getElementById('classroom-field');
+    if (this.value === 'student') {
+        classroomField.style.display = 'block';
+    } else {
+        classroomField.style.display = 'none';
+    }
+});
+</script>

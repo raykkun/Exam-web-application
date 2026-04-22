@@ -14,4 +14,11 @@ class Classroom extends Model
         'code',
         'description',
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'class_users')
+                    ->withPivot('role_in_class')
+                    ->withTimestamps();
+    }
 }

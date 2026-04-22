@@ -11,18 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        
-        Schema::create('results', function (Blueprint $table) {
+        Schema::create('class_users', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('exam_id')->constrained('exams')->onDelete('cascade');
-            $table->json('answers'); // store answers as JSON
-            $table->float('score');
-            $table->string('grade_letter');
-            $table->float('grade_point');
-            $table->timestamp('started_at');
-            $table->timestamp('submitted_at')->nullable();
+            $table->foreignId('classroom_id')->constrained('classrooms')->onDelete('cascade');
             $table->timestamps();
+
+            // Ensure a user can only be in a classroom once
+            $table->unique(['user_id', 'classroom_id']);
         });
     }
 
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('results');
+        Schema::dropIfExists('class_users');
     }
 };

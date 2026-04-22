@@ -47,6 +47,7 @@ class AppServiceProvider extends ServiceProvider
                     ['label' => 'Dashboard', 'url' => route('student.dashboard')],
                     ['label' => 'My Exams', 'url' => route('student.exams')],
                     ['label' => 'My Results', 'url' => route('student.results')],
+                    ['label' => 'Profile', 'url' => route('student.profile.show')],
                 ],
                 default => [
                     ['label' => 'Dashboard', 'url' => route('dashboard')],
